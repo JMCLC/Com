@@ -1,16 +1,13 @@
-# $Id: Makefile,v 1.14 2020/05/22 15:36:45 ist189524 Exp $
 #---------------------------------------------------------------
 #             CONFIGURE THESE VARIABLES IF NEEDED
 #---------------------------------------------------------------
 
-#ROOT = ${HOME}/Documents/IST/Comp/compiladores/root
-ROOT = ${HOME}/Com/compiladores/root
-
+ROOT =
 CDK_INC_DIR = $(ROOT)/usr/include
 CDK_LIB_DIR = $(ROOT)/usr/lib
 CDK_BIN_DIR = $(ROOT)/usr/bin
 
-LANGUAGE=og
+LANGUAGE=mml
 
 #---------------------------------------------------------------
 # PROBABLY, THERE'S NO NEED TO CHANGE ANYTHING BEYOND THIS POINT
@@ -20,13 +17,14 @@ L_NAME=$(LANGUAGE)_scanner
 Y_NAME=$(LANGUAGE)_parser
 
 LFLAGS   = 
-YFLAGS   = -dtvP
+YFLAGS   = -dtv
 CXXFLAGS = -std=c++17 -DYYDEBUG=1 -pedantic -Wall -Wextra -ggdb -I. -I$(CDK_INC_DIR) -Wno-unused-parameter
 LDFLAGS  = -L$(CDK_LIB_DIR) -lcdk #-lLLVM
 COMPILER = $(LANGUAGE)
 
+CDK  = $(CDK_BIN_DIR)/cdk
 LEX  = flex
-YACC = byacc
+YACC = bison
 
 SRC_CPP = $(shell find ast -name \*.cpp) $(wildcard targets/*.cpp) $(wildcard ./*.cpp)
 OFILES  = $(SRC_CPP:%.cpp=%.o)
@@ -35,10 +33,10 @@ OFILES  = $(SRC_CPP:%.cpp=%.o)
 #                DO NOT CHANGE AFTER THIS LINE
 #---------------------------------------------------------------
 
-all: ast/all.h ast/visitor_decls.h $(COMPILER)
+all: .auto/all_nodes.h .auto/visitor_decls.h $(COMPILER)
 
 %.tab.o:: %.tab.c
-	$(CXX) $(CXXFLAGS) -DYYDEBUG -c $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< -o $@ -Wno-class-memaccess
 
 %.o:: %.c
 	$(CXX) $(CXXFLAGS) -c $< -o $@
@@ -47,10 +45,10 @@ all: ast/all.h ast/visitor_decls.h $(COMPILER)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 %.tab.c:: %.y
-	$(YACC) -dtv -b $* $<
+	$(YACC) $(YFLAGS) -b $* $<
 
 %.tab.h:: %.y
-	$(YACC) -dtv -b $* $<
+	$(YACC) $(YFLAGS) -b $* $<
 
 $(L_NAME).cpp: $(L_NAME).l
 	$(LEX) $(LFLAGS) $<
@@ -61,19 +59,19 @@ $(Y_NAME).tab.h: $(Y_NAME).y
 # this is needed to force byacc to run
 $(L_NAME).o: $(L_NAME).cpp $(Y_NAME).tab.h
 
-ast/all.h: 
-	$(CDK_BIN_DIR)/mk-node-decls.pl $(LANGUAGE) > $@
+.auto/all_nodes.h: 
+	$(CDK) ast --decls ast --language $(LANGUAGE) > $@
 
-ast/visitor_decls.h: 
-	$(CDK_BIN_DIR)/mk-visitor-decls.pl $(LANGUAGE) > $@
+.auto/visitor_decls.h: 
+	$(CDK) ast --decls target --language $(LANGUAGE) > $@
 
 $(COMPILER): $(L_NAME).o $(Y_NAME).tab.o $(OFILES)
 	$(CXX) -o $@ $^ $(LDFLAGS)
 
 clean:
-	$(RM) ast/all.h ast/visitor_decls.h *.tab.[ch] *.o $(OFILES) $(L_NAME).cpp $(Y_NAME).output $(COMPILER)
+	$(RM) .auto/all_nodes.h .auto/visitor_decls.h *.tab.[ch] *.o $(OFILES) $(L_NAME).cpp $(Y_NAME).output $(COMPILER)
 
-depend: ast/all.h
+depend: .auto/all_nodes.h
 	$(CXX) $(CXXFLAGS) -MM $(SRC_CPP) > .makedeps
 
 -include .makedeps

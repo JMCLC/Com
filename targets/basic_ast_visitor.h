@@ -1,5 +1,5 @@
-#ifndef __OG_BASIC_AST_VISITOR_H__
-#define __OG_BASIC_AST_VISITOR_H__
+#ifndef __MML_BASIC_AST_VISITOR_H__
+#define __MML_BASIC_AST_VISITOR_H__
 
 #include <string>
 #include <memory>
@@ -10,7 +10,7 @@
 
 /* do not edit -- include node forward declarations */
 #define __NODE_DECLARATIONS_ONLY__
-#include "ast/all.h"  // automatically generated
+#include ".auto/all_nodes.h"  // automatically generated
 #undef __NODE_DECLARATIONS_ONLY__
 /* do not edit -- end */
 
@@ -25,7 +25,7 @@ protected:
 private:
 
   // last symbol inserted in symbol table
-  std::shared_ptr<og::symbol> _new_symbol;
+  std::shared_ptr<mml::symbol> _new_symbol;
 
 protected:
   basic_ast_visitor(std::shared_ptr<cdk::compiler> compiler) :
@@ -45,11 +45,11 @@ public:
   }
 
 public:
-  std::shared_ptr<og::symbol> new_symbol() {
+  std::shared_ptr<mml::symbol> new_symbol() {
     return _new_symbol;
   }
 
-  void set_new_symbol(std::shared_ptr<og::symbol> symbol) {
+  void set_new_symbol(std::shared_ptr<mml::symbol> symbol) {
     _new_symbol = symbol;
   }
 
@@ -61,7 +61,7 @@ public:
   // do not edit these lines
 #define __IN_VISITOR_HEADER__
 #define __PURE_VIRTUAL_DECLARATIONS_ONLY__
-#include "ast/visitor_decls.h"       // automatically generated
+#include ".auto/visitor_decls.h"       // automatically generated
 #undef __PURE_VIRTUAL_DECLARATIONS_ONLY__
 #undef __IN_VISITOR_HEADER__
   // do not edit these lines: end

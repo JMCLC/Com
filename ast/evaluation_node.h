@@ -1,9 +1,9 @@
-#ifndef __OG_AST_EVALUATION_NODE_H__
-#define __OG_AST_EVALUATION_NODE_H__
+#ifndef __MML_AST_EVALUATION_NODE_H__
+#define __MML_AST_EVALUATION_NODE_H__
 
 #include <cdk/ast/expression_node.h>
 
-namespace og {
+namespace mml {
 
   /**
    * Class for describing evaluation nodes.
@@ -27,6 +27,6 @@ namespace og {
 
   };
 
-} // og
+} // mml
 
 #endif

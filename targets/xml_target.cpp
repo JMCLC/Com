@@ -1,4 +1,4 @@
 #include "targets/xml_target.h"
 
 /** @var create and register an XML targets. */
-og::xml_target og::xml_target::_self;
+mml::xml_target mml::xml_target::_self;

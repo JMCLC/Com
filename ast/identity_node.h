@@ -1,12 +1,14 @@
-#ifndef __OG_IDENTITY_NODE_H__
-#define __OG_IDENTITY_NODE_H__
+#ifndef __MML_AST_IDENTITY_NODE_H__
+#define __MML_AST_IDENTITY_NODE_H__
 
+#include <cdk/ast/unary_operation_node.h>
+#include <cdk/ast/expression_node.h>
 
-namespace og {
+namespace mml {
 
     /**
-     * Class for describing the identity operator.
-     */
+    * Class for describing identity nodes.
+    */
     class identity_node: public cdk::unary_operation_node {
 
     public:
@@ -21,6 +23,6 @@ namespace og {
 
     };
 
-} // og
+} // mml
 
 #endif

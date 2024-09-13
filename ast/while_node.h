@@ -1,33 +1,27 @@
-#ifndef __OG_AST_WHILE_H__
-#define __OG_AST_WHILE_H__
+#ifndef __MML_AST_WHILE_NODE_H__
+#define __MML_AST_WHILE_NODE_H__
 
-#include <string>
-#include <cdk/ast/sequence_node.h>
-#include <cdk/ast/typed_node.h>
+#include <cdk/ast/expression_node.h>
 
-
-
-namespace og {
+namespace mml {
 
   /**
-   * Class for describing while cycles.
+   * Class for describing while-cycle nodes.
    */
-
   class while_node: public cdk::basic_node {
     cdk::expression_node *_condition;
-    block_node *_block;
+    cdk::basic_node *_block;
 
   public:
-    while_node(int lineno, cdk::expression_node *condition,  block_node *block) :
-        cdk::basic_node(lineno), _condition(condition), _block(block) {}
-
+    inline while_node(int lineno, cdk::expression_node *condition, cdk::basic_node *block) :
+        basic_node(lineno), _condition(condition), _block(block) {
+    }
 
   public:
-   
-    cdk::expression_node *condition() {
+    inline cdk::expression_node *condition() {
       return _condition;
     }
-    block_node *block() {
+    inline cdk::basic_node *block() {
       return _block;
     }
 
@@ -37,6 +31,6 @@ namespace og {
 
   };
 
-}
+} // mml
 
 #endif

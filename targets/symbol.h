@@ -1,44 +1,32 @@
-#ifndef __OG_TARGETS_SYMBOL_H__
-#define __OG_TARGETS_SYMBOL_H__
+#ifndef __MML_TARGETS_SYMBOL_H__
+#define __MML_TARGETS_SYMBOL_H__
 
 #include <string>
 #include <memory>
 #include <cdk/types/basic_type.h>
 
-namespace og {
+namespace mml {
 
   class symbol {
     int _qualifier;
     std::shared_ptr<cdk::basic_type> _type;
     std::string _name;
-    bool _function;
     long _value; // hack!
-    bool _forward = false;
     int _offset = 0;
-    std::vector<std::shared_ptr<cdk::basic_type>> _arguments;
+    std::vector<std::shared_ptr<cdk::basic_type>> _argumentList;
 
   public:
-    symbol(int qualifier, std::shared_ptr<cdk::basic_type> type, const std::string &name, bool function, 
-    long value, bool forward = false) :
-        _qualifier(qualifier),_type(type), _name(name), _function(function), _value(value), _forward(forward) {
+    symbol(std::shared_ptr<cdk::basic_type> type, const std::string &name, long value) :
+        _type(type), _name(name), _value(value) {
     }
 
     virtual ~symbol() {
       // EMPTY
     }
 
-    std::vector<std::shared_ptr<cdk::basic_type>> arguments() {
-      return _arguments;
-    }
-
-    void setArguments(std::vector<std::shared_ptr<cdk::basic_type>> arguments)
-    {
-      _arguments = arguments;
-    }
     int qualifier() {
       return _qualifier;
     }
-
     std::shared_ptr<cdk::basic_type> type() const {
       return _type;
     }
@@ -48,31 +36,29 @@ namespace og {
     const std::string &name() const {
       return _name;
     }
-
-    bool isFunction() const {
-      return _function;
-    }
-    bool forward() const {
-      return _forward;
-    }
-
     long value() const {
       return _value;
     }
-
     long value(long v) {
       return _value = v;
     }
-
-     int offset() const {
+    int offset() {
       return _offset;
     }
-
     void set_offset(int offset) {
       _offset = offset;
     }
+    std::vector<std::shared_ptr<cdk::basic_type>> arguments() {
+      return _argumentList;
+    }
+    static std::shared_ptr<symbol> createSymbol(std::shared_ptr<cdk::basic_type> type, const std::string &name, long value = 0) {
+      return std::make_shared<symbol>(type, name, value);
+    }
+    static std::shared_ptr<symbol> createSymbol(int qualifier, std::shared_ptr<cdk::basic_type> type, const std::string &name, long value = 0) {
+      return std::make_shared<symbol>(type, name, value);
+    }
   };
 
-} // og
+} // mml
 
 #endif

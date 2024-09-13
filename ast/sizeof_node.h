@@ -1,9 +1,14 @@
-#ifndef __OG_AST_SIZE_OF_DECLARATION_H__
-#define __OG_AST_SIZE_OF_DECLARATION_H__
+#ifndef __MML_AST_SIZEOF_H__
+#define __MML_AST_SIZEOF_H__
 
+#include <cdk/ast/unary_operation_node.h>
+#include <cdk/ast/expression_node.h>
 
-namespace og {
+namespace mml {
 
+   /**
+   * Class for describing sizeof nodes.
+   */
   class sizeof_node: public cdk::unary_operation_node {
   public:
     sizeof_node(int lineno, cdk::expression_node *argument) :
@@ -19,6 +24,6 @@ namespace og {
 
   };
 
-}
+} // mml
 
 #endif

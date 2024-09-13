@@ -1,9 +1,9 @@
-#ifndef __OG_AST_IF_ELSE_NODE_H__
-#define __OG_AST_IF_ELSE_NODE_H__
+#ifndef __MML_AST_IF_ELSE_NODE_H__
+#define __MML_AST_IF_ELSE_NODE_H__
 
 #include <cdk/ast/expression_node.h>
 
-namespace og {
+namespace mml {
 
   /**
    * Class for describing if-then-else nodes.
@@ -34,6 +34,6 @@ namespace og {
 
   };
 
-} // og
+} // mml
 
 #endif

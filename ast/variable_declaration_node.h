@@ -1,21 +1,24 @@
-#ifndef __OG_AST_VARIABLE_DECLARATION_H__
-#define __OG_AST_VARIABLE_DECLARATION_H__
+#ifndef __MML_AST_VARIABLE_DECLARATION_H__
+#define __MML_AST_VARIABLE_DECLARATION_H__
 
 #include <cdk/ast/expression_node.h>
 #include <cdk/ast/typed_node.h>
 
-namespace og {
+namespace mml {
 
+   /**
+   * Class for describing function call nodes.
+   */
   class variable_declaration_node: public cdk::typed_node {
     int _qualifier;
     std::string _identifier;
     cdk::expression_node *_initializer;
 
   public:
-    variable_declaration_node(int lineno, int qualifier, cdk::basic_type *type, std::string &identifier,
+    variable_declaration_node(int lineno, int qualifier, std::shared_ptr<cdk::basic_type> varType, std::string &identifier,
                               cdk::expression_node *initializer) :
         cdk::typed_node(lineno), _qualifier(qualifier), _identifier(identifier), _initializer(initializer) {
-    (this)->type(std::shared_ptr<cdk::basic_type>(type));
+          type(varType);
     }
 
   public:
@@ -36,6 +39,6 @@ namespace og {
 
   };
 
-}
+} //mml
 
 #endif

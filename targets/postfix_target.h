@@ -1,5 +1,5 @@
-#ifndef __OG_TARGETS_POSTFIX_TARGET_H__
-#define __OG_TARGETS_POSTFIX_TARGET_H__
+#ifndef __MML_TARGETS_POSTFIX_TARGET_H__
+#define __MML_TARGETS_POSTFIX_TARGET_H__
 
 #include <cdk/targets/basic_target.h>
 #include <cdk/ast/basic_node.h>
@@ -7,7 +7,7 @@
 
 #include <cdk/emitters/postfix_ix86_emitter.h>
 
-namespace og {
+namespace mml {
 
   class postfix_target: public cdk::basic_target {
     static postfix_target _self;
@@ -21,7 +21,7 @@ namespace og {
     bool evaluate(std::shared_ptr<cdk::compiler> compiler) {
       // this symbol table will be used to check identifiers
       // during code generation
-      cdk::symbol_table<og::symbol> symtab;
+      cdk::symbol_table<mml::symbol> symtab;
 
       // this is the backend postfix machine
       cdk::postfix_ix86_emitter pf(compiler);
@@ -40,6 +40,6 @@ namespace og {
 
   };
 
-} // og
+} // mml
 
 #endif

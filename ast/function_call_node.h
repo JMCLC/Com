@@ -1,35 +1,32 @@
-#ifndef __OG_AST_FUNCTION_CALL_H__
-#define __OG_AST_FUNCTION_CALL_H__
+#ifndef __MML_AST_FUNCTION_CALL_H__
+#define __MML_AST_FUNCTION_CALL_H__
 
 #include <string>
 #include <cdk/ast/basic_node.h>
 #include <cdk/ast/sequence_node.h>
 #include <cdk/ast/expression_node.h>
 
-namespace og {
+namespace mml {
 
   /**
    * Class for describing function call nodes.
-   *
-   * If _arguments is null, them the node is either a call to a function with
-   * no arguments (or in which none of the default arguments is present) or
-   * an access to a variable.
    */
   class function_call_node: public cdk::expression_node {
-    std::string _identifier;
+    cdk::expression_node *_function;
     cdk::sequence_node *_arguments;
 
   public:
-    /**
-     * Constructor for a function call with arguments.
-     */
-    function_call_node(int lineno, const std::string &identifier, cdk::sequence_node *arguments) :
-        cdk::expression_node(lineno), _identifier(identifier), _arguments(arguments) {
+    function_call_node(int lineno, cdk::expression_node *function, cdk::sequence_node *arguments) :
+        cdk::expression_node(lineno), _function(function), _arguments(arguments) {
+    }
+
+    function_call_node(int lineno, cdk::expression_node *function) :
+        cdk::expression_node(lineno), _function(function) {
     }
 
   public:
-    const std::string &identifier() {
-      return _identifier;
+    cdk::expression_node *function() {
+      return _function;
     }
     cdk::sequence_node *arguments() {
       return _arguments;
@@ -41,6 +38,6 @@ namespace og {
 
   };
 
-}
+} //mml
 
 #endif

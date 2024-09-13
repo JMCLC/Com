@@ -4,4 +4,4 @@
  * Postfix for ix86.
  * @var create and register an evaluator for ASM targets.
  */
-og::postfix_target og::postfix_target::_self;
+mml::postfix_target mml::postfix_target::_self;

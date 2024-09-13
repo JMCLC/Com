@@ -1,30 +1,29 @@
-#ifndef __OG_TARGETS_POSTFIX_WRITER_H__
-#define __OG_TARGETS_POSTFIX_WRITER_H__
+#ifndef __MML_TARGETS_POSTFIX_WRITER_H__
+#define __MML_TARGETS_POSTFIX_WRITER_H__
 
 #include "targets/basic_ast_visitor.h"
-#include <stack>
+
 #include <sstream>
-#include <set>
+#include <stack>
 #include <cdk/emitters/basic_postfix_emitter.h>
 
-namespace og {
+namespace mml {
 
   //!
   //! Traverse syntax tree and generate the corresponding assembly code.
   //!
   class postfix_writer: public basic_ast_visitor {
-    cdk::symbol_table<og::symbol> &_symtab;
+    cdk::symbol_table<mml::symbol> &_symtab;
     cdk::basic_postfix_emitter &_pf;
     int _lbl;
-    std::stack<int> _forIni, _forStep, _forEnd; // for break/repeat
-    std::shared_ptr<og::symbol> _function;
-    std::set<std::string> _functions_to_declare;
-    bool _inFunctionBody = false;
-    bool _inFunctionArgs = false;
+    std::stack<int> _whileIni, _whileIteration, _whileEnd;
+    std::shared_ptr<mml::symbol> _function;
+    bool _inFunction = false;
+    bool _inFunctionArguments = false;
     int _offset = 0;
 
   public:
-    postfix_writer(std::shared_ptr<cdk::compiler> compiler, cdk::symbol_table<og::symbol> &symtab,
+    postfix_writer(std::shared_ptr<cdk::compiler> compiler, cdk::symbol_table<mml::symbol> &symtab,
                    cdk::basic_postfix_emitter &pf) :
         basic_ast_visitor(compiler), _symtab(symtab), _pf(pf), _lbl(0) {
     }
@@ -48,12 +47,12 @@ namespace og {
   public:
   // do not edit these lines
 #define __IN_VISITOR_HEADER__
-#include "ast/visitor_decls.h"       // automatically generated
+#include ".auto/visitor_decls.h"       // automatically generated
 #undef __IN_VISITOR_HEADER__
   // do not edit these lines: end
 
   };
 
-} // og
+} // mml
 
 #endif

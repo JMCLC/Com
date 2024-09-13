@@ -1,19 +1,19 @@
-#ifndef __OG_TARGETS_XML_WRITER_H__
-#define __OG_TARGETS_XML_WRITER_H__
+#ifndef __MML_TARGETS_XML_WRITER_H__
+#define __MML_TARGETS_XML_WRITER_H__
 
 #include "targets/basic_ast_visitor.h"
 #include <cdk/ast/basic_node.h>
 
-namespace og {
+namespace mml {
 
   /**
    * Print nodes as XML elements to the output stream.
    */
   class xml_writer: public basic_ast_visitor {
-    cdk::symbol_table<og::symbol> &_symtab;
+    cdk::symbol_table<mml::symbol> &_symtab;
 
   public:
-    xml_writer(std::shared_ptr<cdk::compiler> compiler, cdk::symbol_table<og::symbol> &symtab) :
+    xml_writer(std::shared_ptr<cdk::compiler> compiler, cdk::symbol_table<mml::symbol> &symtab) :
         basic_ast_visitor(compiler), _symtab(symtab) {
     }
 
@@ -47,12 +47,12 @@ namespace og {
   public:
     // do not edit these lines
 #define __IN_VISITOR_HEADER__
-#include "ast/visitor_decls.h"       // automatically generated
+#include ".auto/visitor_decls.h"       // automatically generated
 #undef __IN_VISITOR_HEADER__
     // do not edit these lines: end
 
   };
 
-} // og
+} // mml
 
 #endif
